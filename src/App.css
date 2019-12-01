@@ -16,7 +16,16 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.search{
+  background-color: #92a8d1;
+  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  /*color: white;*/
+}
 .App-link {
   color: #09d3ac;
 }

@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css';
 import GoogleMap from './component/GoogleMap';
 import DBQuery from './component/DBQuery';
+import CrimeSearch from './component/search'
 
 function App() {
   return (
@@ -10,6 +11,9 @@ function App() {
       <header className="App-header">
         <p>Washington D.C. Crime Search</p>
       </header>
+      <body className='search'>
+        <CrimeSearch />
+      </body>
       <GoogleMap />
       <DBQuery />
     </div>

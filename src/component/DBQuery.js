@@ -17,11 +17,10 @@ class DBQuery extends Component {
       });
   };
   render() {
-    return <div>{JSON.stringify(this.state.latAndLong)}</div>;
+    return <div>{JSON.stringify(this.state.crimeData)}</div>;
   }
   componentDidMount() {
     this.getUsers();
-    
   }
   reverseGeoCoding = () => {
       axios

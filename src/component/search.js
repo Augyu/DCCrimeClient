@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class CrimeSearch extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       location: "",
       type: "",
@@ -75,6 +75,7 @@ class CrimeSearch extends Component {
         <br />
         <button type="submit">Search</button>
       </form>
+
     );
   }
 }

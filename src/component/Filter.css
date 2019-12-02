@@ -1,3 +1,8 @@
+.Filter {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 10px 0;
+}
 .dropbtn {
   background-color: #4CAF50;
   color: white;

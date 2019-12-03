@@ -7,9 +7,7 @@ class Filter extends Component {
     this.state = {
       type: "THEFT/OTHER",
       stime: "2017-01-01",
-      etime: "2018-12-31",
-      selectValue: "",
-      renderButton: ""
+      etime: "2018-12-31"
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -20,7 +18,9 @@ class Filter extends Component {
   };
   setShow = () => {
     this.props.data.map(crime =>
-      crime.offense === this.state.type && crime.report_date >= this.state.stime && crime.report_date <= this.state.etime
+      crime.offense === this.state.type &&
+      crime.report_date >= this.state.stime &&
+      crime.report_date <= this.state.etime
         ? (crime.show = true)
         : (crime.show = false)
     );
@@ -38,7 +38,7 @@ class Filter extends Component {
       <div className="Filter">
         <form onSubmit={this.handleSubmit}>
           <label>
-            Start Time:
+            Start Time:&nbsp;
             <input
               type="date"
               name="stime"
@@ -47,7 +47,7 @@ class Filter extends Component {
             />
           </label>
           <label>
-            End Time:
+          &nbsp;End Time:&nbsp;
             <input
               type="date"
               name="etime"
@@ -56,7 +56,7 @@ class Filter extends Component {
             />
           </label>
           <label>
-            Crime Type:
+          &nbsp;Crime Type:&nbsp;
             <select
               name="type"
               value={this.state.type}
@@ -75,7 +75,7 @@ class Filter extends Component {
               <option value="ARSON">ARSON</option>
             </select>
           </label>
-          <button type="submit">Search</button>
+          &nbsp;<button type="submit">Search</button>
         </form>
       </div>
     );

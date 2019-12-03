@@ -4,7 +4,7 @@ import GoogleMap from "./component/GoogleMap";
 //import DBQuery from './component/DBQuery';
 import Filter from "./component/Filter";
 import axios from "axios";
-import CrimeSearch from './component/search'
+// import CrimeSearch from './component/search'
 
 require("dotenv").config();
 
@@ -24,6 +24,7 @@ class App extends Component {
         res.data.forEach(result => {
           result.show = false;
           result.infoShow = false;
+          result.tweets = [];
         });
         this.setState({ data: res.data });
       })
@@ -33,7 +34,9 @@ class App extends Component {
       });
   }
   handler() {
-    this.state.update? this.setState({ update: false }):this.setState({ update: true })
+    this.state.update
+      ? this.setState({ update: false })
+      : this.setState({ update: true });
   }
   render() {
     return (
@@ -41,11 +44,12 @@ class App extends Component {
         <header className="App-header">
           <p>Washington D.C. Crime Search</p>
         </header>
-        <div className="search">
-          {/* <CrimeSearch /> */}
+        <div className="Filter">
           <Filter data={this.state.data} action={this.handler} />
         </div>
-        <GoogleMap data={this.state.data} />
+        <div className="Map">
+          <GoogleMap data={this.state.data} />
+        </div>
       </div>
     );
   }

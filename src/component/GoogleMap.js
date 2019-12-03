@@ -1,65 +1,50 @@
 import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
 import ping from "./ping.png";
-import "./GoogleMap.css"
+import "./GoogleMap.css";
+import axios from "axios";
 require("dotenv").config();
-// const AnyReactComponent = ({ text }) => (
-//   <div style={{
-//     color: 'white',
-//     background: 'red',
-//     padding: '15px 10px',
-//     display: 'inline-flex',
-//     textAlign: 'center',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     borderRadius: '100%',
-//     transform: 'translate(-50%, -50%)'
-//   }}>
-//     {text}
-//   </div>
-// );
-// class MarkerApi extends GoogleMapMarkers {
-//   render(){
-//   return (
-//     <img src={ping} alt="Marker" style={{ width: 30, height: 30 }}></img>
-//   )
-//   }
-// }
+
 class InfoWindow extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      text:""
-    }
+    this.state = {};
   }
   render() {
+    // this.props.text.tweets.map(tweet => console.log(tweet.tweet_date))
     return (
-      <div className="info">{this.props.text}</div>
-    )
+      <div>
+        <div className="info">
+          {this.props.text.report_date}
+          <br></br>({this.props.text.latitude}, {this.props.text.longitude})
+        </div>
+        {this.props.text.tweets.map(tweet => (
+          <div className="info">
+            {tweet.tweet_date}
+            <br></br>
+            {tweet.tweet_text}
+          </div>
+        ))}
+      </div>
+    );
   }
 }
 class Marker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data:[]
-    }
+      data: []
+    };
   }
   render() {
     return (
       <div>
-        <InfoWindow text={this.props.text} />
         <img src={ping} alt="Marker" style={{ width: 30, height: 30 }}></img>
+        {this.props.text.infoShow && <InfoWindow text={this.props.text} />}
       </div>
-    )
+    );
   }
 }
-// const PingComponent = () => (
-//   <div>
-//     <img src={ping} alt="Ping" style={{ width: 30, height: 30 }}></img>
-//     <InfoWindow />
-//   </div>
-// );
 
 class GoogleMap extends Component {
   static defaultProps = {
@@ -72,34 +57,38 @@ class GoogleMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      counter: 0
+      counter: true
     };
     this.markerOnClick = this.markerOnClick.bind(this);
   }
   markerOnClick(event) {
-    console.log(event)
-    event.preventDefault();
+    this.props.data.forEach(function(element) {
+      if (element.octo_record_id_key === event) {
+        element.infoShow = !element.infoShow;
+        axios
+          .get(process.env.REACT_APP_SERVER_URL + "data/" + event)
+          .then(res => {
+            element.tweets = res.data;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    });
+    this.setState({ counter: !this.state.counter });
+    // event.preventDefault();
   }
-  // componentDidMount(){
-  //   axios
-  //     .get(process.env.REACT_APP_SERVER_URL+'data')
-  //     .then(res => {
-  //       this.setState({data: res.data})
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //       return null;
-  //     });
-  // }
-
-  // onChildClick = key => {
-  //   console.log(key);
-  // };
-
-  // handleClick = (e) => {
-  //   e.preventDefault();
-  //   console.log('ya')
-  // };
+  getTweets(eventId) {
+    axios
+      .get(process.env.REACT_APP_SERVER_URL + "data/" + eventId)
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        console.log(err);
+        return null;
+      });
+  }
   render() {
     return (
       // Important! Always set the container height explicitly
@@ -108,7 +97,7 @@ class GoogleMap extends Component {
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
-          // onChildClick={this.onChildClick}
+          onChildClick={this.markerOnClick}
         >
           {this.props.data.map(data =>
             data.show ? (
@@ -116,8 +105,7 @@ class GoogleMap extends Component {
                 key={data.octo_record_id_key}
                 lat={data.latitude}
                 lng={data.longitude}
-                text={data.offense}
-                // onChildClick={this.markerOnClick}
+                text={data}
               />
             ) : null
           )}

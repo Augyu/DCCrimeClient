@@ -23,6 +23,7 @@ class App extends Component {
       .then(res => {
         res.data.forEach(result => {
           result.show = false;
+          result.infoShow = false;
         });
         this.setState({ data: res.data });
       })

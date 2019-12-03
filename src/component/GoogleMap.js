@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
 import ping from "./ping.png";
+import purpleping from './purpleping.png'
 import "./GoogleMap.css";
 import axios from "axios";
 require("dotenv").config();
@@ -37,9 +38,11 @@ class Marker extends Component {
     };
   }
   render() {
+    var val = Boolean(this.props.text.is_twitter==="1")
     return (
       <div>
-        <img src={ping} alt="Marker" style={{ width: 30, height: 30 }}></img>
+        {val && <img className="icon" src={ping} alt="Marker" style={{ width: 30, height: 30 }}></img>}
+        {!val && <img className="icon" src={purpleping} alt="Marker" style={{ width: 30, height: 30 }}></img>}
         {this.props.text.infoShow && <InfoWindow text={this.props.text} />}
       </div>
     );
@@ -90,6 +93,21 @@ class GoogleMap extends Component {
       });
   }
   render() {
+    const heatMapData = { positions: [
+      {lat: 38, lng:-77},
+      {lat: 38.1, lng: -77.01},
+      {lat: 38, lng:-77},
+      {lat: 38, lng:-77},
+      {lat: 38, lng:-77},
+      {lat: 38, lng:-77},
+      {lat: 38, lng:-77},
+      {lat: 38, lng:-77}
+      ],
+      options:{
+        radius: 20,
+        opacity: 0.6
+      }
+    }
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: "80vh", width: "100%" }}>
@@ -98,6 +116,8 @@ class GoogleMap extends Component {
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
           onChildClick={this.markerOnClick}
+          heatmapLibrary={true}
+          heatmap={heatMapData}
         >
           {this.props.data.map(data =>
             data.show ? (

@@ -13,8 +13,7 @@ class App extends Component {
     super(props);
     this.state = {
       data: [],
-      update: false,
-      heapMapData: []
+      update: false
     };
     this.handler = this.handler.bind(this);
   }
@@ -26,8 +25,6 @@ class App extends Component {
           result.show = false;
           result.infoShow = false;
           result.tweets = [];
-          // this.heapMapData.push(result.latitude);
-          // console.log(result.latitude)
         });
         this.setState({ data: res.data });
       })
@@ -35,7 +32,6 @@ class App extends Component {
         console.log(err);
         return null;
       });
-    
   }
   handler() {
     this.state.update
@@ -52,7 +48,7 @@ class App extends Component {
           <Filter data={this.state.data} action={this.handler} />
         </div>
         <div className="Map">
-          <GoogleMap data={this.state.data} />
+          <GoogleMap data={this.state.data} action={this.handler} />
         </div>
       </div>
     );

@@ -35,7 +35,7 @@ class Filter extends Component {
   }
   render() {
     return (
-      <div className="Filter">
+      <div className="filter">
         <form onSubmit={this.handleSubmit}>
           <label>
             Start Time:&nbsp;
@@ -47,7 +47,8 @@ class Filter extends Component {
             />
           </label>
           <label>
-          &nbsp;End Time:&nbsp;
+          <br></br>
+          End Time:&nbsp;
             <input
               type="date"
               name="etime"
@@ -56,7 +57,8 @@ class Filter extends Component {
             />
           </label>
           <label>
-          &nbsp;Crime Type:&nbsp;
+          <br></br>
+          Crime Type:&nbsp;
             <select
               name="type"
               value={this.state.type}
@@ -75,7 +77,7 @@ class Filter extends Component {
               <option value="ARSON">ARSON</option>
             </select>
           </label>
-          &nbsp;<button type="submit">Search</button>
+          <br></br><button type="submit">Search</button>
         </form>
       </div>
     );

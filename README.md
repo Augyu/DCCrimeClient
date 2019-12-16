@@ -1,3 +1,10 @@
+### This part is for Urban Computing 
+App.js retrieves the data from the server.
+GoogleMap.js renders the google map, marker and infoWindow.
+Filter.js handles the filter funtion on the website.
+
+### The end of the part ###
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
